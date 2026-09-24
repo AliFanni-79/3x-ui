@@ -1234,6 +1234,8 @@
       "outboundTag": "Výstup na pripojenie",
       "outboundTagHint": "Smerovať požiadavky API tohto servera cez vybraný výstup Xray. Do bežiacej konfigurácie sa automaticky pridá miestny vstupný most a zmena sa použije za behu. Prázdne pole znamená priame pripojenie.",
       "outboundTagPlaceholder": "Priame pripojenie",
+      "trafficMultiplier": "Násobiteľ prevádzky",
+      "trafficMultiplierHint": "Účtovaná prevádzka = skutočný prírastok za synchronizáciu × násobiteľ (1.00x účtuje prevádzku bez zmeny, 1.50x účtuje o 50 % viac). Platí len pre prevádzku vytvorenú po zmene; historická prevádzka sa nikdy neprepočítava.",
       "inboundSyncMode": "Import vstupov",
       "inboundSyncModeHint": "Vyberte vstupy, ktoré sa majú z tohto servera importovať. Pri existujúcich serveroch sú predvolene vybrané všetky.",
       "allInbounds": "Všetky vstupy",
