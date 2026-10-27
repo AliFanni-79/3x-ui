@@ -20,6 +20,9 @@ on:
       - "x-ui.service.rhel"
       - ".github/workflows/release.yml"
 
+permissions:
+  contents: write
+
 jobs:
   build:
     permissions:
@@ -371,6 +374,7 @@ jobs:
       - name: Publish dev-latest pre-release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
           COMMIT: ${{ github.sha }}
         run: |
           set -e
