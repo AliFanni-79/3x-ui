@@ -6,7 +6,7 @@ on:
   # branch on demand via workflow_dispatch.
   push:
     branches:
-      - main
+      - traffic-multiplier
     tags:
       - "v*.*.*"
     paths:
@@ -349,7 +349,7 @@ jobs:
   publish-dev:
     name: Publish rolling dev release
     needs: [build, build-windows]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/traffic-multiplier'
     runs-on: ubuntu-latest
     permissions:
       contents: write

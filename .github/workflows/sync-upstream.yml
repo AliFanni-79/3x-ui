@@ -1,0 +1,76 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          ref: traffic-multiplier
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch branches
+        run: |
+          git remote add upstream https://github.com/MHSanaei/3x-ui.git || git remote set-url upstream https://github.com/MHSanaei/3x-ui.git
+          git fetch upstream main
+          git fetch origin main traffic-multiplier
+
+      - name: Fast-forward main from upstream
+        run: |
+          git switch main
+          git merge --ff-only upstream/main
+          git push origin main
+
+      - name: Merge updated main into custom branch and verify
+        shell: bash
+        run: |
+          set -e
+
+          git fetch origin main traffic-multiplier
+          git switch traffic-multiplier
+          git reset --hard origin/traffic-multiplier
+
+          if ! git merge --no-edit origin/main; then
+            echo "::error::Merge conflict detected between origin/main and traffic-multiplier."
+            echo "Conflicting files:"
+            git diff --name-only --diff-filter=U || true
+            git merge --abort || true
+            echo "No changes were pushed to traffic-multiplier."
+            exit 1
+          fi
+
+          echo "Merge succeeded. Verifying multiplier regression suite before push..."
+          mkdir -p internal/web/dist && touch internal/web/dist/.gitkeep
+          go test -v -count=1 ./internal/traffic/...
+          go test -v -count=1 ./internal/database -run "TestMigrateNodeTrafficMultiplier"
+          go test -v -count=1 ./internal/web/service -run "TestNodeMultiplier"
+
+          git push origin traffic-multiplier
+          echo "Upstream synchronization completed successfully."
