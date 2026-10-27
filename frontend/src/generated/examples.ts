@@ -955,6 +955,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "scheme": "https",
     "status": "online",
     "tlsVerifyMode": "verify",
+    "trafficMultiplier": 100,
     "transitive": false,
     "unavailableMetrics": [
       ""
@@ -983,7 +984,8 @@ export const EXAMPLES: Record<string, unknown> = {
     "port": 1,
     "remark": "",
     "scheme": "http",
-    "tlsVerifyMode": "verify"
+    "tlsVerifyMode": "verify",
+    "trafficMultiplier": 100
   },
   "NodeView": {
     "activeCount": 20,
@@ -1023,6 +1025,7 @@ export const EXAMPLES: Record<string, unknown> = {
     "scheme": "https",
     "status": "online",
     "tlsVerifyMode": "verify",
+    "trafficMultiplier": 100,
     "transitive": false,
     "unavailableMetrics": [
       ""

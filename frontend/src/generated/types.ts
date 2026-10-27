@@ -864,6 +864,7 @@ export interface Node {
   scheme: string;
   status: string;
   tlsVerifyMode: string;
+  trafficMultiplier: number;
   transitive?: boolean;
   unavailableMetrics?: string[];
   updatedAt: number;
@@ -890,6 +891,7 @@ export interface NodeMutationRequest {
   remark: string;
   scheme: string;
   tlsVerifyMode: string;
+  trafficMultiplier?: number | null;
 }
 
 export interface NodeView {
@@ -928,6 +930,7 @@ export interface NodeView {
   scheme: string;
   status: string;
   tlsVerifyMode: string;
+  trafficMultiplier: number;
   transitive?: boolean;
   unavailableMetrics?: string[];
   updatedAt: number;

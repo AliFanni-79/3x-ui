@@ -920,6 +920,7 @@ export const NodeSchema = z.object({
   scheme: z.enum(['http', 'https']),
   status: z.string(),
   tlsVerifyMode: z.enum(['verify', 'skip', 'pin', 'mtls']),
+  trafficMultiplier: z.number().int().min(100).max(10000),
   transitive: z.boolean().optional(),
   unavailableMetrics: z.array(z.string()).optional(),
   updatedAt: z.number().int(),
@@ -947,6 +948,7 @@ export const NodeMutationRequestSchema = z.object({
   remark: z.string(),
   scheme: z.enum(['http', 'https']),
   tlsVerifyMode: z.enum(['verify', 'skip', 'pin', 'mtls']),
+  trafficMultiplier: z.number().int().nullable().optional(),
 });
 export type NodeMutationRequest = z.infer<typeof NodeMutationRequestSchema>;
 
@@ -986,6 +988,7 @@ export const NodeViewSchema = z.object({
   scheme: z.string(),
   status: z.string(),
   tlsVerifyMode: z.string(),
+  trafficMultiplier: z.number().int(),
   transitive: z.boolean().optional(),
   unavailableMetrics: z.array(z.string()).optional(),
   updatedAt: z.number().int(),
